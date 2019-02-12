@@ -31,8 +31,8 @@ angular.module("listings").controller("ListingsController", [
       //if (err) {
       //throw err;
       //} else {
-      // $scope.listings.push($scope.newListing);
-      // $scope.newListing = {};
+      //$scope.listings.push($scope.newListing);
+      //$scope.newListing = {};
       //window.location.href = "./index.html";
       var addToJSON = {
         name: $scope.addMe.buildingName,
@@ -43,7 +43,18 @@ angular.module("listings").controller("ListingsController", [
           longitude: $scope.addMe.coordinates.longitude
         }
       };
+
       $scope.listings.push(addToJSON);
+      /*Listings.create(addToJSON).then(
+        function(response) {
+          window.location.href = "./index.html";
+        },
+        function(error) {
+          console.log("Unable to add listing:", error);
+        }
+      );*/
+
+      Listings.create(listings);
       //window.location.href = "./index.html";
       //}
     };
@@ -55,7 +66,7 @@ angular.module("listings").controller("ListingsController", [
        */
       var index = $scope.listings.indexOf(id);
       $scope.listings.splice(index, 1);
-      window.location.href = "./index.html";
+      // window.location.href = "./index.html";
     };
 
     $scope.showDetails = function(index) {

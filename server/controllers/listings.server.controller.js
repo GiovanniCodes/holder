@@ -23,7 +23,7 @@ exports.create = function(req, res) {
       res.status(400).send(err);
     } else {
       res.json(listing);
-      window.location.href = "./index.html";
+      //window.location.href = "./index.html";
     }
   });
 };
@@ -56,7 +56,7 @@ exports.update = function(req, res) {
       res.status(400).send(err);
     } else {
       res.json(listing);
-      window.location.href = "./index.html";
+      //window.location.href = "./index.html";
     }
   });
 };
@@ -73,7 +73,7 @@ exports.delete = function(req, res) {
       res.status(400).send(err);
     } else {
       res.json(listing);
-      window.location.href = "./index.html";
+      //window.location.href = "./index.html";
     }
   });
 };
@@ -90,7 +90,7 @@ exports.list = function(req, res) {
         res.status(400).send(err);
       } else {
         res.json(listings);
-        window.location.href = "./index.html";
+        //window.location.href = "./index.html";
       }
     });
 };
