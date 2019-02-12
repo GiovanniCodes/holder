@@ -1,7 +1,6 @@
-
 /* Dependencies */
-var mongoose = require('mongoose'), 
-    Listing = require('../models/listings.server.model.js');
+var mongoose = require("mongoose"),
+  Listing = require("../models/listings.server.model.js");
 
 /*
   In this file, you should use Mongoose queries in order to retrieve/add/remove/update listings.
@@ -14,18 +13,17 @@ var mongoose = require('mongoose'),
 
 /* Create a listing */
 exports.create = function(req, res) {
-
   /* Instantiate a Listing */
   var listing = new Listing(req.body);
 
-
   /* Then save the listing */
   listing.save(function(err) {
-    if(err) {
+    if (err) {
       console.log(err);
       res.status(400).send(err);
     } else {
       res.json(listing);
+      window.location.href = "./index.html";
     }
   });
 };
@@ -43,6 +41,24 @@ exports.update = function(req, res) {
   /** TODO **/
   /* Replace the article's properties with the new properties found in req.body */
   /* Save the article */
+  listing.code = req.body.code;
+  listing.name = req.body.name;
+  listing.address = req.body.address;
+  if (req.results) {
+    listing.coordinates = {
+      latitude: req.results.lat,
+      longitude: req.results.lng
+    };
+  }
+  listing.save(function(err) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    } else {
+      res.json(listing);
+      window.location.href = "./index.html";
+    }
+  });
 };
 
 /* Delete a listing */
@@ -51,12 +67,32 @@ exports.delete = function(req, res) {
 
   /** TODO **/
   /* Remove the article */
+  Listing.remove({ code: listing.code }, function(err) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    } else {
+      res.json(listing);
+      window.location.href = "./index.html";
+    }
+  });
 };
 
 /* Retreive all the directory listings, sorted alphabetically by listing code */
 exports.list = function(req, res) {
   /** TODO **/
   /* Your code here */
+  //Finds all then use sort functtion to sort
+  Listing.find()
+    .sort("code")
+    .exec(function(err, listings) {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.json(listings);
+        window.location.href = "./index.html";
+      }
+    });
 };
 
 /* 
@@ -68,7 +104,7 @@ exports.list = function(req, res) {
  */
 exports.listingByID = function(req, res, next, id) {
   Listing.findById(id).exec(function(err, listing) {
-    if(err) {
+    if (err) {
       res.status(400).send(err);
     } else {
       req.listing = listing;
