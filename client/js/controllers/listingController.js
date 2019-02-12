@@ -66,7 +66,7 @@ angular.module("listings").controller("ListingsController", [
        */
       var index = $scope.listings.indexOf(id);
       $scope.listings.splice(index, 1);
-      // window.location.href = "./index.html";
+      window.location.href = "./index.html";
     };
 
     $scope.showDetails = function(index) {
